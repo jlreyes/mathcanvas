@@ -1,0 +1,37 @@
+<!-- Simple dialog template -->
+<div class="dialog">
+    <div class="dialog-box">
+        <div class="header">
+            <h1>Create room</h1>
+        </div>
+        <div class="body">
+            <form id="form-create-room">
+                <div style="text-align: center;">
+                    <input 
+                        id="form-create-room-name"
+                        class="full"
+                        type="text"
+                        placeholder="Room Name"
+                        required="required" />
+                    <div class="form-elem-wrapper"
+                         style="display:none;">
+                        <label for="form-create-room-type">
+                            Room Type:
+                        </label>
+                        <select 
+                            id="form-create-room-type"
+                            class="full">
+                            <option 
+                                selected="selected">Public</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button 
+                        id="form-create-room-submit"
+                        class="full">Create Room</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
