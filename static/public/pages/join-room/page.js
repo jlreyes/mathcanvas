@@ -29,7 +29,7 @@ var JoinRoomView = (function (_super) {
         this.mNumRooms = 0;
         var user = app.getUser();
         for(var roomKey in user.rooms) {
-            var room = user.rooms[room];
+            var room = user.rooms[roomKey];
             this.addRoomListButton(room);
             this.mNumRooms++;
         }
@@ -335,6 +335,27 @@ var JoinRoomMobileView = (function (_super) {
     }
     return body_0;
 })();
+(function () {
+    dust.register("dialog-create-room", body_0);
+    function body_0(chk, ctx) {
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+    }
+    return body_0;
+})();
+(function () {
+    dust.register("dialog-create-room", body_0);
+    function body_0(chk, ctx) {
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+    }
+    return body_0;
+})();
+(function () {
+    dust.register("dialog-create-room", body_0);
+    function body_0(chk, ctx) {
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+    }
+    return body_0;
+})();
 var JoinRoomPage = (function (_super) {
     __extends(JoinRoomPage, _super);
     function JoinRoomPage() {
@@ -433,7 +454,7 @@ var CreateRoomDialog = (function (_super) {
             return;
         }
         Util.postJSON("rooms/createRoom", postData, function (result) {
-            var room = result;
+            var room = result.room;
             var view = this.mCallPage.getView();
             view.addRoomListButton(room);
             app.getUser().rooms[room.id] = room;

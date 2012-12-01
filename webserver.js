@@ -8,7 +8,6 @@
  */
 /* Modules */
 var express = require("express");
-var Recaptcha = require('recaptcha').Recaptcha;
 
 /* Local libraries */
 var globals = require("./lib/Globals.js");
@@ -112,8 +111,8 @@ var reapRooms = function() {
                     var lastAccessTime = parseInt(time, 10);
                     var curTime = new Date().getTime();
                     var deltaTime = curTime - lastAccessTime;
-                    if (deltaTime > Globals.roomTimeout) {
-                        dbClient.removeRoom(rid, function() {
+                    if (deltaTime > globals.roomTimeout) {
+                        dbClient.rooms.removeRoom(rid, function() {
                             console.log("Removed room", rid);
                         });
                     }

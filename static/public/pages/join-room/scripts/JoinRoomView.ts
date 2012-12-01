@@ -35,7 +35,7 @@ class JoinRoomView extends PageView {
         this.mNumRooms = 0;
         var user = app.getUser();
         for (var roomKey in user.rooms) {
-            var room = user.rooms[room];
+            var room = user.rooms[roomKey];
             this.addRoomListButton(room);
             this.mNumRooms++;
         }

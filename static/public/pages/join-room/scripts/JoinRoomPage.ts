@@ -97,7 +97,7 @@ class CreateRoomDialog extends Dialog {
             return;
         }
         Util.postJSON("rooms/createRoom", postData, function(result) {
-            var room = result;
+            var room = result.room;
             var view = <JoinRoomView> this.mCallPage.getView();
             view.addRoomListButton(room);
             app.getUser().rooms[room.id] = room;

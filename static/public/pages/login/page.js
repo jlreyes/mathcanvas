@@ -105,8 +105,8 @@ var LoginPage = (function (_super) {
         var app = this.getApp();
         Util.postJSON("session/login", postData, function (res) {
             Util.postJSON("session/getUser", {
-            }, function (user) {
-                app.setUser(user);
+            }, function (res) {
+                app.setUser(res.user);
                 app.startPage(new Intent(JoinRoomPage, {
                 }));
             }, {
@@ -135,7 +135,9 @@ var LoginPage = (function (_super) {
                 response: Recaptcha.get_response()
             };
             Recaptcha.destroy();
-            Util.postJSON("session/register", postData, this.onLoginSubmit, {
+            Util.postJSON("session/register", postData, function () {
+                this.onLoginSubmit();
+            }.bind(this), {
                 preventInput: true,
                 back: true
             });

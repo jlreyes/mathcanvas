@@ -42,8 +42,8 @@ class LoginPage extends Page {
         };
         var app : App = this.getApp();
         Util.postJSON("session/login", postData, function(res) {
-            Util.postJSON("session/getUser", {}, function(user) {
-                app.setUser(user);
+            Util.postJSON("session/getUser", {}, function(res) {
+                app.setUser(res.user);
                 app.startPage(new Intent(JoinRoomPage, {}));
             }, {preventInput : true});
         }, {preventInput: true});
@@ -68,8 +68,9 @@ class LoginPage extends Page {
                 response: Recaptcha.get_response()
             }
             Recaptcha.destroy();
-            Util.postJSON("session/register", postData, this.onLoginSubmit, 
-                          {preventInput: true, back: true});
+            Util.postJSON("session/register", postData, function() {
+                this.onLoginSubmit();
+            }.bind(this),{preventInput: true, back: true});
         }.bind(this);
         /* The data we pass to the dialog */
         var data = {
