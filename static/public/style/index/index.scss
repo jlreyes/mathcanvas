@@ -247,7 +247,7 @@ $bar-height: 50px;
     .body {
         bottom: $bar-height;
         overflow: auto;
-        -webkit-overflow-scrolling: touch;
+        /*-webkit-overflow-scrolling: touch;*/
         padding: 0% 5%;
         position: absolute;
         top: $bar-height;

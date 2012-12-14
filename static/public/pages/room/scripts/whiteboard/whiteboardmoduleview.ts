@@ -67,7 +67,6 @@ class WhiteboardModuleView {
     public addHammer(jquery : JQuery) {
         /* add a border on tap */
         var addBorder = function() {
-            console.log("ADDING BORDER");
             if (this.mIsFocused === false) {
                 this.mJquery.css("border-color", "black");
                 this.mJquery.css("border-style", "dotted");
@@ -75,7 +74,6 @@ class WhiteboardModuleView {
         }.bind(this);
         /* Remove a border on tap */
         var removeBorder = function() {
-            console.log("REMOVING BORDER");
             if (this.mIsFocused === false) {
                 this.mJquery.css("border-color", "rgba(0,0,0,0)");
             }
@@ -84,7 +82,12 @@ class WhiteboardModuleView {
         var hammer = new Hammer(jquery[0], {
             prevent_default: true,
             tapstart_callback: addBorder,
-            tapend_callback: removeBorder
+            tapend_callback: removeBorder,
+            tap_double : false,
+            swipe: false,
+            transform:  false,
+            tap: true,
+            css_hacks: false
         });
         this.mHammer = hammer;
         /* Long press callback */
@@ -104,7 +107,7 @@ class WhiteboardModuleView {
         hammer.ondragend = onDrag(this.onDragEnd);
     }
 
-    /* Remove hammer from this module */
+    /* Remove touch from this module */
     public removeHammer() {
         this.mHammer.destroy();
     }

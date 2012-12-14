@@ -16,6 +16,7 @@
 body {
   font-family: Arial,Helvetica,sans-serif;
   height: 100%;
+  overflow: hidden;
   position: absolute;
   width: 100%; }
 
@@ -239,7 +240,7 @@ select {
   .page .body {
     bottom: 50px;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    /*-webkit-overflow-scrolling: touch;*/
     padding: 0% 5%;
     position: absolute;
     top: 50px;

@@ -766,7 +766,12 @@ var WhiteboardModuleView = (function () {
         var hammer = new Hammer(jquery[0], {
             prevent_default: true,
             tapstart_callback: addBorder,
-            tapend_callback: removeBorder
+            tapend_callback: removeBorder,
+            tap_double: false,
+            swipe: false,
+            transform: false,
+            tap: false,
+            css_hacks: false
         });
         this.mHammer = hammer;
         hammer.onhold = function () {

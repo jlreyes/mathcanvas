@@ -83,15 +83,17 @@
 #whiteboard-container {
     height: 100%;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    /*-webkit-overflow-scrolling: touch;*/
     position: absolute;
     width: 100%;
+    z-index: 1;
 }
 
 /* The canvas */
 #canvas {
     background: #ffffff;
     position: absolute;
+    z-index: 1;
 }
 
 /* Contains the tabs as well as their tools */
@@ -139,7 +141,7 @@
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    /*-webkit-overflow-scrolling: touch;*/
     white-space: nowrap;
     width: 100%;
 }
