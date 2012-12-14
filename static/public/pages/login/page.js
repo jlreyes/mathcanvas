@@ -69,6 +69,7 @@ var LoginPage = (function (_super) {
     function LoginPage() {
         _super.apply(this, arguments);
 
+        this.mRecaptchaCreated = false;
     }
     LoginPage.prototype.onCreate = function () {
         if(this.getApp() instanceof MobileApp) {
@@ -136,8 +137,8 @@ var LoginPage = (function (_super) {
                 challenge: Recaptcha.get_challenge(),
                 response: Recaptcha.get_response()
             };
-            Recaptcha.destroy();
             Util.postJSON("session/register", postData, function () {
+                Recaptcha.destroy();
                 this.onLoginSubmit();
             }.bind(this), {
                 preventInput: true,
@@ -146,7 +147,7 @@ var LoginPage = (function (_super) {
         }.bind(this);
         var data = {
             context: {
-                title: "Recaptcha?",
+                title: "Recaptcha",
                 message: "",
                 buttons: [
                     {
@@ -161,14 +162,17 @@ var LoginPage = (function (_super) {
         var checkRecaptcha = function () {
             var container = $(".dialog .dialog-box .body > div > p");
             if(container.length > 0) {
-                container.html("");
-                container.append($("<div id='recaptcha'></div>"));
-                Recaptcha.destroy();
-                Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB", "recaptcha", {
-                    theme: "clean"
-                });
+                if(this.mRecaptchaCreated === false) {
+                    this.mRecaptchaCreated = true;
+                    container.append($("<div id='recaptcha'></div>"));
+                    Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB", "recaptcha", {
+                        theme: "clean"
+                    });
+                } else {
+                    Recaptcha.reload();
+                }
             } else {
-                requestAnimationFrame(checkRecaptcha);
+                setTimeout(checkRecaptcha, 100);
             }
         };
         checkRecaptcha();

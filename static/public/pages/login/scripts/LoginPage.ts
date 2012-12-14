@@ -7,6 +7,7 @@
 declare var JoinRoomPage;
 
 class LoginPage extends Page {
+    private mRecaptchaCreated : bool = false;
 
     public onCreate() : void {
         /* Create the view */
@@ -68,15 +69,15 @@ class LoginPage extends Page {
                 challenge: Recaptcha.get_challenge(),
                 response: Recaptcha.get_response()
             }
-            Recaptcha.destroy();
             Util.postJSON("session/register", postData, function() {
+                Recaptcha.destroy();
                 this.onLoginSubmit();
             }.bind(this),{preventInput: true, back: true});
         }.bind(this);
         /* The data we pass to the dialog */
         var data = {
             context : {
-                title: "Recaptcha?",
+                title: "Recaptcha",
                 message: "",
                 buttons: [{
                     text: "Submit",
@@ -90,13 +91,14 @@ class LoginPage extends Page {
         var checkRecaptcha = function() {
             var container = $(".dialog .dialog-box .body > div > p");
             if (container.length > 0) {
-                container.html("");
-                container.append($("<div id='recaptcha'></div>"));
-                Recaptcha.destroy();
-                Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB",
-                                 "recaptcha",
-                                 {theme: "clean"});
-            } else requestAnimationFrame(checkRecaptcha);
+                if (this.mRecaptchaCreated === false) {
+                    this.mRecaptchaCreated = true;
+                    container.append($("<div id='recaptcha'></div>"));
+                    Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB",
+                                     "recaptcha",
+                                     {theme: "clean"});
+                } else Recaptcha.reload();
+            } else setTimeout(checkRecaptcha, 100);
         };
         checkRecaptcha();
     }
