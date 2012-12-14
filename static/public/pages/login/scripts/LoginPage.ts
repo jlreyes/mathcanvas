@@ -92,6 +92,7 @@ class LoginPage extends Page {
             if (container.length > 0) {
                 container.html("");
                 container.append($("<div id='recaptcha'></div>"));
+                Recaptcha.destroy();
                 Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB",
                                  "recaptcha",
                                  {theme: "clean"});
