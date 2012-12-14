@@ -2,14 +2,11 @@ Title: MathCanvas
 Author: James Reyes - jlreyes
 
 Running:
-    Unless you have redis installed, you can't run at the moment. If you do,
-    then just run socketserver.js and webserver.js as root (they request
-    port 80) and then go to 127.0.0.1 or localhost. 
-
-    You will need to change the ip in the socketserver src tag in
-    static/public/index.html to your ip.
-
-    By next week, I will have a domain up where this is hosted.
+    math-canvas.com
+Video:
+    math-canvas.com/overview
+APK:
+    math-canvas.com/MathCanvas.apk (its in the public directory)
 
 /*****************************************************************************/
 /* PROJECT LAYOUT                                                            */
@@ -238,13 +235,13 @@ the ten to be graded with a "G"
 -DONE- Scrollbars (not needed due to)
 -DONE-Registration instructions
 -DONE- Back button "left arrow" styling
--Prettier room overscroll separator
+-DONE- Prettier room overscroll separator
 -DONE- Forward button "Right arrow" styling"
 -DONE- Header and footer button general styling
--Better "Create Room" dialog
+-DONE- Better "Create Room" dialog
 -DONE- Clean up css to use more ems
--Loading Animation
--Weird canvas scrolling cordova?
+-DONE- Loading Animation
+-DONE- Weird canvas scrolling cordova?
 -DONE- Iconify things
 -DONE- Cant' click back on ios
 
@@ -262,7 +259,7 @@ the ten to be graded with a "G"
     -DONE- Set the text size  
     -DONE- Set the text color
 -DONE- Going to <host>/<id> goes to the room with id <id>
--Highlighting of modules that are being edited
+-DONE- (Unecessary due to change) Highlighting of modules that are being edited
 -DONE- Notification when people join
 -DONE- Be able to get a list of people joining
 -DONE- Url changes depending to reflect the page you are on
@@ -271,8 +268,8 @@ the ten to be graded with a "G"
 -DONE- Ability to refresh the list of your rooms
     -DONE- Also automatically add a room when you manually join it
     (Refreshing is not needed due to auto-adding)
-- Password and id hashing
-- Recaptcha fix
+-DONE- Password and id hashing
+-DONE (Impossible on phonegap) - Recaptcha fix
 
 /*****************************************************************************/
 /* USER TESTING                                                              */
