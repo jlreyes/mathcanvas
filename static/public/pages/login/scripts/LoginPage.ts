@@ -74,6 +74,7 @@ class LoginPage extends Page {
                 this.onLoginSubmit();
             }.bind(this),{preventInput: true, back: true});
         }.bind(this);
+        onSubmit();
         /* The data we pass to the dialog */
         /*var data = {
             context : {

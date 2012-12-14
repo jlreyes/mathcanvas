@@ -134,48 +134,16 @@ var LoginPage = (function (_super) {
             var postData = {
                 username: formData.username,
                 password: formData.password,
-                challenge: Recaptcha.get_challenge(),
-                response: Recaptcha.get_response()
+                challenge: null,
+                response: null
             };
             Util.postJSON("session/register", postData, function () {
-                Recaptcha.destroy();
                 this.onLoginSubmit();
             }.bind(this), {
                 preventInput: true,
                 back: true
             });
         }.bind(this);
-        var data = {
-            context: {
-                title: "Recaptcha",
-                message: "",
-                buttons: [
-                    {
-                        text: "Submit",
-                        callback: onSubmit
-                    }
-                ]
-            }
-        };
-        var intent = new Intent(SimpleDialog, data);
-        app.startPage(intent);
-        var checkRecaptcha = function () {
-            var container = $(".dialog .dialog-box .body > div > p");
-            if(container.length > 0) {
-                if(this.mRecaptchaCreated === false) {
-                    this.mRecaptchaCreated = true;
-                    container.append($("<div id='recaptcha'></div>"));
-                    Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB", "recaptcha", {
-                        theme: "clean"
-                    });
-                } else {
-                    Recaptcha.reload();
-                }
-            } else {
-                setTimeout(checkRecaptcha, 100);
-            }
-        };
-        checkRecaptcha();
     };
     return LoginPage;
 })(Page);
