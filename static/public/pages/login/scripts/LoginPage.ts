@@ -76,7 +76,7 @@ class LoginPage extends Page {
         /* The data we pass to the dialog */
         var data = {
             context : {
-                title: "Are you human?",
+                title: "Recaptcha?",
                 message: "",
                 buttons: [{
                     text: "Submit",
@@ -90,6 +90,7 @@ class LoginPage extends Page {
         var checkRecaptcha = function() {
             var container = $(".dialog .dialog-box .body > div > p");
             if (container.length > 0) {
+                container.html("");
                 container.append($("<div id='recaptcha'></div>"));
                 Recaptcha.create("6LcqudkSAAAAAImtOjBR3ALKVzy1EAMHeg2c3roB",
                                  "recaptcha",
