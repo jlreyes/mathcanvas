@@ -764,7 +764,7 @@ var Socket = (function () {
     function Socket(user, roomId, errorCallback) {
         this.mUser = user;
         this.mRoomId = roomId;
-        var uri = "http://" + location.hostname + ":3000";
+        var uri = "http://" + location.hostname + ":8080";
         var opts = {
             "force new connection": true,
             reconnect: false

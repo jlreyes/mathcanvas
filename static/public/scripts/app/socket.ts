@@ -34,7 +34,7 @@ class Socket {
         this.mUser = user;
         this.mRoomId = roomId;
         /* Create socket.io connection */
-        var uri = "http://" + location.hostname + ":3000";
+        var uri = "http://" + location.hostname + ":8080";
         var opts = {"force new connection":true, reconnect: false};
         this.mSocket = io.connect(uri, opts);
         /* Function to call on error */
