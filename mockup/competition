@@ -1,0 +1,57 @@
+Focusing on competition with math features
+--My features--
+-Add formulas using easy formatting
+-Formula and graph plotting
+-Ask questions and receive answers
+
+
+There are very few options available, surprisingly.
+-----Desktop-----
+Twiddla
+url: http://www.twiddla.com/
+Pros:
+-Has the ability to draw shapes that snap to a grid
+-Can upload documents
+-Can add formulas using latex
+Cons:
+-Not focused on math- its just a limited subset
+-equations editor is very limited
+-Not cross-platform
+-No wolfram alpha integration (not as powerful)
+
+Scriblink
+url: http://www.scriblink.com/
+Pros:
+-Easy to use
+-latex
+-Can add equations
+-Multiple pages
+Cons:
+-Java...
+-No cross-platform
+-VERY limited equations
+-Glitchy
+
+-----Android-----
+NONE
+There are no whiteboard apps available that have the
+ability to do math (only collaborative drawing)
+
+-----iPhone----
+PageSend:
+url: http://www.uquery.com/apps/KIGAi/pagesend-interactive-whiteboard?locale=en
+Pros
+-Can add a grid
+Cons
+-It's a drawing app with the ability to add a grid.
+-It's not cross-platform
+
+WhiteBoard HD:
+url: http://www.uquery.com/apps/Hzeoo/whiteboard-hd?locale=en
+Pros
+-Can add a grid
+-Actually has non-drawing features
+Cons
+-It's a GOOD drawing app with the ability to add a grid.
+-Not cross-platform
+

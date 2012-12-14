@@ -9,6 +9,8 @@ class PageView {
     private mTemplate : Template;
     private mContext : any;
     private mJquery : JQuery;
+    /* True iff this view has been inflated */
+    private mIsInflated : bool = false;
     /* Hashmap of special button types to their corresponding
      * function calls */
     private static sSpecialButtons = {
@@ -29,39 +31,16 @@ class PageView {
             if (Util.exists(e)) throw e;
             var jquery = $(out);
             this.mJquery = this.onInflation(jquery);
-            this.makeMobile();
+            this.makeMobile(this.mJquery);
+            this.mIsInflated = true;
             callback();
         }.bind(this));
     }
 
-    /* Helper function that makes the current jquery 
-     * element mobile. That is, we add touch listeners */
-    public makeMobile() {
-        /* Button listeners */
-        var buttonSelector = "button,ul.button-list li"
-        var buttons = this.mJquery.find(buttonSelector);
-        var addClass = function() {
-                $(this).addClass("active");
-        };
-        var removeClass = function() {
-                $(this).removeClass("active");
-        };
-        for (var i = 0; i < buttons.length; i++) {
-            var button = $(buttons[i]);
-            /* Determine the callback */
-            var callback = null;
-            var buttonType = button.attr("data-type");
-            if (Util.exists(buttonType)) {
-                if (buttonType in PageView.sSpecialButtons)
-                    callback = PageView.sSpecialButtons[buttonType];
-            }
-            /* Create the listener */
-            button.ontap(addClass, removeClass, callback);
-            button.click(function(e){
-                e.preventDefault();
-                return false;
-            });
-        }
+    /* Calls util.makemobile. Subclasses can override if they want to
+     * add mobile features */
+    public makeMobile(jquery : JQuery) : void {
+        Util.makeMobile(jquery);
     }
 
     /* Called when this view is inflated. Subclasses should do template
@@ -76,6 +55,14 @@ class PageView {
     
     public getPage() : Page {
         return this.mPage;
+    }
+
+    public isInflated() : bool {
+        return this.mIsInflated;
+    }
+
+    public getParent() : JQuery {
+        return this.mJquery.parent();
     }
 
     public getJquery() : JQuery {

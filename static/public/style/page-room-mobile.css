@@ -1,0 +1,145 @@
+/*
+ * Css for the room page (mobile!)
+ */
+
+
+/*
+ * NOTIFICATION BOX
+ */
+#notification-box {
+    background-color: rgb(0,0,0);
+    box-shadow: 0 0 5px #444444;
+    display: none;
+    font-weight: normal;
+    color: white;
+    margin: 0 auto;
+    opacity: .9;
+    padding: .25em;
+    position: absolute;
+    width: 50%;
+    z-index: 3;
+}
+
+#notification-box > h1 {
+    font-size: .8em;
+    margin: 0;
+    margin-left: -.2em;
+    overflow: hidden;
+    padding: .25em;
+    padding-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+#notification-box > p {
+    font-size: .75em;
+    line-height: .75em;
+    margin-left: .2em;
+    overflow: hidden;
+    padding: .25em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+/* 
+ * SCROLLBAR 
+ */
+#horizontal-scrollbar {
+    bottom: 50px;
+    height: .5em;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+
+#horizontal-scrollbar .handle {
+    background: rgba(0,0,0,.75);
+    height: 100%;
+    width: 1em;
+}
+
+#vertical-scrollbar {
+    height: 100%;
+    position: fixed;
+    right: 0;
+    width: .5em;
+    z-index: 2;
+}
+
+#vertical-scrollbar .handle{
+    background: rgba(0,0,0,.75);
+    height: 1em;
+    width: 100%;
+}
+
+/*
+ * WHITEBOARD
+ */
+
+#whiteboard-container {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    width: 100%;
+}
+
+/* The canvas */
+#canvas {
+    background: #ffffff;
+    position: absolute;
+}
+
+/* Contains the tabs as well as their tools */
+#tool-controls-container {
+    display: block;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Contains the tools for a module */
+#module-tools-container {
+    bottom: 0;
+    display: none;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Contains the change tab button */
+#tool-select-container {
+    display: inline-block;
+    float: left;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 2;
+}
+
+#tool-select-container > * {
+    float: left;
+}
+
+/* Contains the tabs */
+#tool-tab-container {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 1;
+}
+
+/* A tab will automatically */
+.tab {
+    float: left;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    width: 100%;
+}

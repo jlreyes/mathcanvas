@@ -3,6 +3,9 @@
  * Author: jlreyes
  */
 
+/******************************************************************************/
+/* MIXINS                                                                     */ 
+/******************************************************************************/
 @mixin browser-patch($property, $args) {
   -webkit-#{$property}: $args;
   -moz-#{$property}: $args;
@@ -19,6 +22,10 @@
   background-image: linear-gradient($dir, $begin, $end); 
 }
 
+/******************************************************************************/
+/* GENERIC TAG STYLING                                                        */ 
+/******************************************************************************/
+
 * {
     -webkit-backface-visibility: hidden;
     -webkit-tap-highlight-color: transparent;
@@ -27,145 +34,13 @@
 
 body {
     font-family: Arial,Helvetica,sans-serif;
-    overflow-x: hidden;
+    height: 100%;
+    position: absolute;
+    width: 100%;
 }
 
 p {
     margin: 0;
-}
-
-/* Waiting div */
-#wait-screen {
-    @include browser-patch(transition, opacity .1s ease-in-out);
-    background: rgba(0,0,0,1);
-    display: block;
-    height: 100%;
-    opacity: 1;
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-}
-
-.page-container {
-    left: 0;
-    position: absolute;
-    right: 0;
-    width: 100%;
-    height: 100%;
-}
-
-$trans-props: opacity,left,right;
-$trans-dur: .3s,.75s,.75s;
-$trans-func: ease-in-out,ease-in-out,ease-in-out;
-.page-container.transition {
-    @include browser-patch(transition-property, $trans-props);
-    @include browser-patch(transition-duration, $trans-dur);
-    @include browser-patch(transition-timing-function, $trans-func);
-}
-
-$bar-height: 50px;
-/* Page */
-.page {
-    @include linear-gradient(top, #eeeeee, #dddddd);
-    //background: url('backgrounds/noisy_grid.png');
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    /* Attempt to get hardware acceleration */
-    -webkit-transform: translate3d(0, 0, 0);
-    -webkit-transform: translateZ(0);
-    .header {
-        @include linear-gradient(top, #222222, #111111);
-        //background: #222222;
-        box-shadow: 0px 1px 12px black;
-        color: white;
-        height: $bar-height;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        text-align: center;
-        width: 100%;
-        z-index: 1;
-        h1 {
-            font-size: 1.5em;
-            line-height: $bar-height;
-            margin: 0;
-            position: fixed;
-            width: 100%;
-            z-index: 0;
-        }
-        button {
-            position: relative;
-            z-index: 1;
-        }
-        button.left {
-            float: left;
-        }
-        button.right {
-            float: right;
-        }
-    }
-    .body {
-        bottom: $bar-height;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 0% 5%;
-        position: absolute;
-        top: $bar-height;
-        width: 90%;
-        z-index: 0;
-    }
-    .footer {
-        @include linear-gradient(top, #222222, #111111);
-        bottom: 0;
-        //box-shadow: 0px -3px 12px black;
-        color: white;
-        height: $bar-height;
-        position: fixed;
-        text-align: center;
-        width: 100%;
-        z-index: 1;
-        h1 {
-            font-size: 1.5em;
-            line-height: $bar-height;
-            margin: 0;
-            position: fixed;
-            width: 100%;
-            z-index: 0;
-        }
-        button {
-            float: left;
-            position: relative;
-            z-index: 1;
-        }
-    }
-}
-
-
-/* Dialog */
-.dialog {
-    background: rgba(0,0,0,.5);
-    height: 100%;
-    position: absolute;
-    width: 100%;
-}
-
-.dialog-box {
-    background: rgba(255,255,255, 1);
-    border-radius: 5px;
-    min-height: 50px;
-    margin: 20px auto;
-    overflow: hidden;
-    padding: 10px 20px;
-    width: 75%;
-    .header {
-        h1 {
-            margin: 0;
-        }
-    }
-    .body {
-        margin-top: 1em;
-    }
 }
 
 /* Section styling */
@@ -181,6 +56,14 @@ $bar-height: 50px;
     box-shadow: 0px 0px 5px #444444;
     margin: 20px auto;
     padding: 5px 10px;
+}
+
+/* Separator styling */
+.vertical-separator {
+    background: #333333;
+    display: block;
+    height: 100%;
+    width: .2em;
 }
 
 /* Button list styling */
@@ -224,9 +107,18 @@ button.active {
     box-shadow: 0px 0px 5px #444444 inset;
 }
 
+textarea {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #444444 inset;
+    margin: 5px auto;
+    padding: .25em .5em;
+    -webkit-user-select: auto;
+}
+
 /* Input styling */
 $input-padding: .45em;
-input {
+input:not([type=range]) {
     @include browser-patch(appearance, none);
     border: none;
     border-radius: 5px;
@@ -272,3 +164,202 @@ input:focus {
 select {
     padding: .25em .5em;
 }
+
+/******************************************************************************/
+/* APP FRAMEWORK STYLING                                                      */ 
+/******************************************************************************/
+
+/* Waiting div */
+#wait-screen {
+    @include browser-patch(transition, opacity .1s ease-in-out);
+    background: rgba(0,0,0,1);
+    display: block;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+
+#page-wrapper {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.page-container {
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+$trans-props: opacity,left,right,top,bottom;
+$trans-dur: .3s,.75s,.75s,.75s,.75s;
+$trans-func: ease-in-out,ease-in-out,ease-in-out,ease-in-out,ease-in-out;
+.transition {
+    @include browser-patch(transition-property, $trans-props);
+    @include browser-patch(transition-duration, $trans-dur);
+    @include browser-patch(transition-timing-function, $trans-func);
+}
+
+$bar-height: 50px;
+/* Page */
+.page {
+    @include linear-gradient(top, #eeeeee, #dddddd);
+    //background: url('backgrounds/noisy_grid.png');
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    /* Attempt to get hardware acceleration */
+    .header {
+        @include linear-gradient(top, #222222, #111111);
+        //background: #222222;
+        box-shadow: 0px 1px 12px black;
+        color: white;
+        height: $bar-height;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        text-align: center;
+        width: 100%;
+        z-index: 1;
+        h1 {
+            font-size: 1.5em;
+            line-height: $bar-height;
+            margin: 0;
+            position: absolute;
+            width: 100%;
+            z-index: 0;
+        }
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    }
+    .body {
+        bottom: $bar-height;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0% 5%;
+        position: absolute;
+        top: $bar-height;
+        width: 90%;
+        z-index: 0;
+    }
+    .footer {
+        @include linear-gradient(top, #222222, #111111);
+        bottom: 0;
+        color: white;
+        height: $bar-height;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        h1 {
+            font-size: 1.5em;
+            line-height: $bar-height;
+            margin: 0 auto;
+            overflow: visible;
+            text-align: center;
+            width: 100%;
+            z-index: 0;
+        }
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    }
+}
+
+/* Fix weird vertical centering */
+.icon-large::before {
+    vertical-align: middle;
+}
+
+$button-icon-height: 3 * $bar-height / 4;
+button.icon {
+    box-shadow: none;
+    height: $button-icon-height;
+    line-height: $button-icon-height;
+    padding: 0 $button-icon-height * .2;
+    position: relative;
+    z-index: 1;
+    i::before {
+
+    }
+    p {
+        display: inline;
+        margin: 0;
+        margin-left: .25em;
+    }
+}
+
+
+/* Dialog */
+.dialog {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    .dialog-background {
+        background: rgba(0,0,0,.5);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+    }
+}
+
+.dialog-box {
+    background: rgba(255,255,255, 1);
+    border-radius: 5px;
+    min-height: 50px;
+    margin: 20px auto;
+    overflow: hidden;
+    padding: 10px 20px;
+    position: relative;
+    width: 75%;
+    z-index: 2;
+    .header {
+        h1 {
+            margin: 0;
+        }
+    }
+    .body {
+        margin-top: 1em;
+    }
+}
+
+/* Select dialog box */
+.select.dialog {
+    .dialog-box {
+        border-radius: 0;
+        padding: 0;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            li {
+                border-bottom: solid 1px #888888;
+                padding: 1.25em 1.25em;
+            }
+            li:last-child {
+                border-bottom: none;
+            }
+            li.active {
+                background: #4484EB;
+                color: white;
+            }
+        }
+    }
+}
+
+

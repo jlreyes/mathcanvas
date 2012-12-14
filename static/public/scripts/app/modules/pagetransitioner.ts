@@ -29,7 +29,7 @@ module PageTransitioner {
         pageContainer1 = $("#page-container-1");
         pageContainer2 = $("#page-container-2");
         /* Register for transition callbacks */
-        var transEnd ="transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd";
+        var transEnd = Constants.TRANS_END_NAME;
         pageContainer1.bind(transEnd, function(e){
             var i;
             for (i = 0; i < callbacks1.length; i++) {

@@ -53,7 +53,8 @@ class LoginPage extends Page {
         if (Util.exists(e)) e.preventDefault();
         var view : LoginView = <LoginView> this.getView();
         if (!this.formDataValid()) {
-            view.notifyDataInvalid();
+            var msg = "Please enter a username and a password to register.";
+            view.notifyDataInvalid(msg);
             return;
         }
         /* Create a captcha popup */

@@ -1,5 +1,6 @@
 /* Declarations */
 /// <reference path="../../lib/user.d.ts"/>
+/// <reference path="../../lib/room.d.ts"/>
 /// <reference path="../../lib/app.d.ts"/>
 /// <reference path="../../lib/jquery.d.ts"/>
 /* Page files */

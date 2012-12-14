@@ -32,11 +32,12 @@ class LoginView extends PageView {
         return jquery;
     }
 
-    public notifyDataInvalid() {
+    public notifyDataInvalid(msg? : string) {
+        var message = msg? msg : "Please fill out all fields";
         var context : SimpleDialogContext =
             {
                 title : "Error",
-                message : "Please fill out all fields",
+                message : message,
                 buttons : [
                     {
                         text : "Okay",

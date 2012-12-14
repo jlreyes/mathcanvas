@@ -22,10 +22,11 @@ var LoginView = (function (_super) {
         this.mRecaptcha = jquery.find("#form-login-recaptcha");
         return jquery;
     };
-    LoginView.prototype.notifyDataInvalid = function () {
+    LoginView.prototype.notifyDataInvalid = function (msg) {
+        var message = msg ? msg : "Please fill out all fields";
         var context = {
             title: "Error",
-            message: "Please fill out all fields",
+            message: message,
             buttons: [
                 {
                     text: "Okay",
@@ -122,7 +123,8 @@ var LoginPage = (function (_super) {
         }
         var view = this.getView();
         if(!this.formDataValid()) {
-            view.notifyDataInvalid();
+            var msg = "Please enter a username and a password to register.";
+            view.notifyDataInvalid(msg);
             return;
         }
         var app = this.getApp();

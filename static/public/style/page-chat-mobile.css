@@ -1,0 +1,32 @@
+/*
+ * Chat room css (mobile!)
+ */
+#chat-messages {
+    height: 77%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#chat-input {
+    bottom: 0;
+    margin-bottom: 3%;
+    margin-left: -2.5%;
+    position: absolute;
+    text-align: center;
+    width: 95%;
+}
+
+#chat-input-form {
+    box-shadow: 0 0 30px #444444;
+    margin: 0;
+    margin-top: 1%;
+}
+
+.message.box > h2 {
+    margin: 0;
+}
+
+.message.box > p {
+    margin-left: .3em;
+}

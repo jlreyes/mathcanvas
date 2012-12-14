@@ -3,6 +3,10 @@
  */
 /// <reference path="./imports.ts"/>
 
+declare interface Room {
+    id: number; name: string;
+}
+
 class JoinRoomView extends PageView {
     private mJoinRoom : JQuery;
     private mRoomList : JQuery;
@@ -32,8 +36,12 @@ class JoinRoomView extends PageView {
         joinRoomButton.hammer({}).bind("tap", page.onJoinRoomTap.bind(page));
         /* Button list logic */
         this.mRoomList = jquery.find("ul.button-list");
+        return jquery;
+    }
+
+    public refreshRoomsList() {
         this.mNumRooms = 0;
-        var user = app.getUser();
+        var user = Globals.app.getUser();
         for (var roomKey in user.rooms) {
             var room = user.rooms[roomKey];
             this.addRoomListButton(room);
@@ -41,7 +49,6 @@ class JoinRoomView extends PageView {
         }
         if (this.mNumRooms === 0)
             this.mRoomList.text("You have no rooms.");
-        return jquery;
     }
 
     public addRoomListButton(room : Room) {
@@ -53,11 +60,9 @@ class JoinRoomView extends PageView {
         button.text(room.name);
         this.mRoomList.append(button);
         /* Button callback */
-        button.hammer({})
-              .bind("tap", function(e) {
-                    var num = parseInt(room.id, 10);
-                    page.joinRoom(num);
-                });
+        button.hammer({}).bind("tap", function(e) {
+            page.joinRoom(room.id);
+        });
     }
 
     public getJoinRoomInputJquery() {
@@ -69,6 +74,8 @@ class CreateRoomDialogView extends DialogView {
     private static sTemplate : Template = new Template("dialog-create-room");
     private mRoomType : JQuery;
     private mRoomName : JQuery;
+    private mRoomWidth : JQuery;
+    private mRoomHeight : JQuery;
 
     constructor(dialog : CreateRoomDialog) {
         super(dialog, CreateRoomDialogView.sTemplate, {});
@@ -79,6 +86,8 @@ class CreateRoomDialogView extends DialogView {
         /* Get references */
         this.mRoomType = jquery.find("#form-create-room-type");
         this.mRoomName = jquery.find("#form-create-room-name");
+        this.mRoomWidth = jquery.find("#form-create-room-width");
+        this.mRoomHeight = jquery.find("#form-create-room-height");
         /* Add the button callbacks */
         jquery.find("#form-create-room-submit")
               .hammer({})
@@ -89,7 +98,9 @@ class CreateRoomDialogView extends DialogView {
     public getFormData() {
         return {
             name: this.mRoomName.val(),
-            type: this.mRoomType.val().toLowerCase()
+            type: this.mRoomType.val().toLowerCase(),
+            width: this.mRoomWidth.val(),
+            height: this.mRoomHeight.val()
         }
     }
 }

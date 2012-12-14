@@ -1,0 +1,92 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1343" measuredH="1114" mockupW="1285" mockupH="1099">
+  <controls>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="126" y="98" w="1217" h="643" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="126" y="171" w="216" h="542" measuredW="200" measuredH="199" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <position>left</position>
+        <selectedIndex>0</selectedIndex>
+        <text>All%0AStudent%201%0AStudent%202%0AStudent%203%0AStudent%204</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::HSplitter" x="342" y="171" w="-1" h="542" measuredW="11" measuredH="100" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="199" y="178" w="-1" h="-1" measuredW="34" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <text>You%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Label" x="227" y="178" w="82" h="36" measuredW="165" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Ask%20questions%20if%20you%20need%20to</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::HRule" x="206" y="214" w="-1" h="-1" measuredW="100" measuredH="10" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="64" controlTypeID="com.balsamiq.mockups::TextArea" x="206" y="658" w="106" h="41" measuredW="200" measuredH="140" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Press%20enter%20to%20send</text>
+      </controlProperties>
+    </control>
+    <control controlID="65" controlTypeID="com.balsamiq.mockups::HRule" x="206" y="648" w="-1" h="-1" measuredW="100" measuredH="10" zOrder="7" locked="false" isInGroup="-1"/>
+    <control controlID="66" controlTypeID="com.balsamiq.mockups::Label" x="199" y="224" w="-1" h="-1" measuredW="30" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <text>You</text>
+      </controlProperties>
+    </control>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::Link" x="206" y="245" w="-1" h="-1" measuredW="105" measuredH="21" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>asked%20a%20question.</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::TitleWindow" x="67" y="837" w="363" h="277" measuredW="450" measuredH="400" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Question%20by%20You</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::HRule" x="206" y="276" w="-1" h="-1" measuredW="100" measuredH="10" zOrder="11" locked="false" isInGroup="-1"/>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Title" x="93" y="15" w="-1" h="-1" measuredW="342" measuredH="50" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Desktop%3A%20Instructor</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::Arrow" x="93" y="253" w="106" h="33" measuredW="150" measuredH="100" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Arrow" x="58" y="286" w="35" h="551" measuredW="150" measuredH="100" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Title" x="78" y="785" w="-1" h="-1" measuredW="465" measuredH="50" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Desktop%20Question%20Window</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::Accordion" x="1147" y="171" w="196" h="543" measuredW="150" measuredH="240" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Manipulate%0AHistory%0AWolfram%0AGoogle%0ATutorials%0AShare</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="75" controlTypeID="com.balsamiq.mockups::HSplitter" x="1136" y="169" w="-1" h="545" measuredW="11" measuredH="100" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="77" controlTypeID="com.balsamiq.mockups::TabBar" x="353" y="169" w="783" h="545" measuredW="281" measuredH="100" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>Page%201%2C%20Page%202%2C%20Page%203%2C%20Add%20%5C%5B+%5C%5D</text>
+      </controlProperties>
+    </control>
+    <control controlID="78" controlTypeID="com.balsamiq.mockups::Title" x="362" y="214" w="-1" h="-1" measuredW="213" measuredH="26" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>The%20Mean%20Value%20Theorem</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -62,7 +62,7 @@ server.listen(80);
  * ROUTES
  * -----------------------------------------------------------------------------
  *  / -> private/home/home.html
- *  /[number] -> room.html // TODO
+ *  /[number] -> room.html
  *  /json/:module/:command -> commands[<module>][<command>]()
  */
 
@@ -73,6 +73,12 @@ var sendError = function(response, title, message) {
     };
     response.send(404, JSON.stringify(error));
 };
+
+server.get(/^\/([0-9]+)$/, function(request, response) {
+    var id = parseInt(request.params[0], 10);
+    if (util.exists(id) && (isNaN(id) === false))
+        response.sendfile(__dirname + "/static/public/index.html");
+});
 
 /* Process json command */
 server.all("/json/:module/:command", function(request, response) {
@@ -108,9 +114,11 @@ var reapRooms = function() {
         for (var roomId in rooms) {
             dbClient.rooms.getLastAccessTime(roomId, (function(rid) {
                 return function(time) {
+                    if (!util.exists(time)) return;
                     var lastAccessTime = parseInt(time, 10);
                     var curTime = new Date().getTime();
                     var deltaTime = curTime - lastAccessTime;
+                    console.log("Room:", rid, "DTime:", deltaTime);
                     if (deltaTime > globals.roomTimeout) {
                         dbClient.rooms.removeRoom(rid, function() {
                             console.log("Removed room", rid);

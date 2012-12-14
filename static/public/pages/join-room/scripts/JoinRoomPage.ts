@@ -16,6 +16,29 @@ class JoinRoomPage extends Page {
         else throw "Unimplemented";
     }
 
+    public onResume() : void {
+        /* Fill the rooms list */
+        var view : JoinRoomView = <JoinRoomView> this.getView();
+        view.refreshRoomsList();
+        /* See if we just returned from a room */
+        if (Util.exists(Globals.socket)) {
+            Globals.socket.destroy();
+            Globals.socket = null;
+            /* Change the url */
+            history.pushState({}, "", "/");
+        } else {
+            /* Check the url. If a number is appended to the url, take the
+             * user to that room */
+             var path : string = window.location.pathname;
+             if (Util.exists(path) && path.length > 1) {
+                 path = path.substring(1, path.length);
+                 var id : number = parseInt(path, 10);
+                 if (Util.exists(id) && !isNaN(id))
+                    this.joinRoom(id);
+             }
+        }
+    }
+
     /* Called when the user presses the "Create Room" button */
     public onCreateRoomTap() {
         var app = this.getApp();
@@ -25,6 +48,7 @@ class JoinRoomPage extends Page {
     }
 
     /* Called when the user presses the "Join Room" button */
+    // TODO add room to "My Rooms"
     public onJoinRoomTap() {
         var view : JoinRoomView = <JoinRoomView> this.getView();
         var input = view.getJoinRoomInputJquery();
@@ -52,7 +76,21 @@ class JoinRoomPage extends Page {
     /* Called when we request to join a room with the given id */
     public joinRoom(id : number) {
         var app : App = this.getApp();
-        app.startPage(new Intent(RoomPage, {id : id}));
+        /* Create the socket error callback */
+        var onError = function(e : string) {
+            app.startPage(new Intent(JoinRoomPage, {destroy: true}));
+            var context = {
+                title: "Error",
+                message: e,
+                buttons: [{
+                    text: "Okay", callback: app.back.bind(app)
+                }]
+            };
+            app.startPage(new Intent(SimpleDialog, {context: context}));
+        };
+        /* Create the socket */
+        Globals.socket = new Socket(app.getUser(), id, onError);
+        app.startPage(new Intent(RoomPage, {}));
     }
 
     /* Called when the login button is tapped */
@@ -60,9 +98,7 @@ class JoinRoomPage extends Page {
         Util.postJSON("session/logout", {}, function() {
             var app : App = this.getApp();
             app.setUser(null);
-            app.startPage(new Intent(LoginPage, {
-                destroy: true
-            }));
+            app.back({backHint: LoginPage});
         }.bind(this));
     }
 
@@ -82,18 +118,32 @@ class CreateRoomDialog extends Dialog {
         var view : CreateRoomDialogView = <CreateRoomDialogView> this.getView();
         var formData = view.getFormData();
         var postData = {
-            name: formData.name, type: formData.type
+            name: formData.name, type: formData.type,
+            width: formData.width, height: formData.height
         };
-        if (!formData.name.match(/^\w+$/)) {
+        var onFail = function(message) {
             app.back();
             var context : SimpleDialogContext = {
-                title: "Error", message: "Invalid room name",
+                title: "Error", message: message,
                 buttons? : [{
                     text: "Okay",
                     callback: app.back.bind(app)
                 }]
             };
             app.startPage(new Intent(SimpleDialog, {context: context}));
+        }
+        if (!formData.name.match(/^\w+$/)) {
+            onFail("Invalid room name");
+            return;
+        }
+        if (parseInt(formData.width, 10) <= 512 || 
+                parseInt(formData.width, 10) >= 4096) {
+            onFail("Width must be in range [512-4096]");
+            return;
+        }
+        if (parseInt(formData.height, 10) <= 512 ||
+                parseInt(formData.height, 10) >= 4096) {
+            onFail("Height must be in range [512-4096]");
             return;
         }
         Util.postJSON("rooms/createRoom", postData, function(result) {

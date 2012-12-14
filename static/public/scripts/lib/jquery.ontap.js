@@ -4,6 +4,8 @@
     // call `upCB` when button should not be down
     // call `tapCB` when the button is tapped
     $.fn.ontap = function(downCB, upCB, tapCB){
+        if (!upCB) upCB = function() {};
+        if (!downCB) downCB = function() {};
         // bind the callbacks to the jQuery object (standard jQuery behavior)
         downCB = downCB.bind(this);
         upCB = upCB.bind(this);
@@ -38,10 +40,10 @@
             }
         };
 
-        var up = function(){
+        var up = function(event){
             if (potentialTap){
                 upCB();
-                if (tapCB) tapCB();
+                if (tapCB) tapCB(event);
                 potentialTap = false;
             }
         };
@@ -55,7 +57,7 @@
                 down(x, y);
             });
             this.on('touchend', function(event){
-                up();
+                up(event);
             });
             // cancel on touchleave (finger moves out of object)
             this.on('touchleave', function(event){

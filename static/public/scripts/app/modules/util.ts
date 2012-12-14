@@ -64,6 +64,46 @@ module Util {
         });
     }
 
+    /* Searches the given jquery element for buttons and 
+     * makes them more-compatible for mobile */
+    export var makeMobile = function (jquery : JQuery) {
+        /* Button listeners */
+        var buttonSelector = "button,ul.button-list li,[data-type='button']"
+        var buttons = jquery.find(buttonSelector);
+        buttons = buttons.add(jquery.filter(buttonSelector));
+        var addClass = function() {
+                $(this).addClass("active");
+        };
+        var removeClass = function() {
+                $(this).removeClass("active");
+        };
+        for (var i = 0; i < buttons.length; i++) {
+            var button = $(buttons[i]);
+            /* Determine the callback */
+            var callback = null;
+            var buttonType = button.attr("data-type");
+            if (Util.exists(buttonType)) {
+                if (buttonType in PageView.sSpecialButtons)
+                    callback = PageView.sSpecialButtons[buttonType];
+            }
+            /* Create the listener */
+            button.ontap(addClass, removeClass, callback);
+            button.click(function(e){
+                e.preventDefault();
+                return false;
+            });
+        }
+    }
+
+    export function cloneObject(oldObj : any) {
+        if (typeof oldObj !== "object") return oldObj;
+        var newObj = {};
+        for (var key in oldObj) {
+            newObj[key] = cloneObject(oldObj[key]);
+        }
+        return newObj;
+    }
+
     export function deviceWidth() {
         return window.innerWidth;
     }

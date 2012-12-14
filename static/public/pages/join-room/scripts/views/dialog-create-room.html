@@ -1,5 +1,6 @@
 <!-- Simple dialog template -->
 <div class="dialog">
+    <div class="dialog-background"></div>
     <div class="dialog-box">
         <div class="header">
             <h1>Create room</h1>
@@ -24,6 +25,27 @@
                             <option 
                                 selected="selected">Public</option>
                         </select>
+                    </div>
+                    <div style="text-align: left; display: none;">
+                        <h3 style="margin: 0 .5em;display:inline;">
+                            Dimensions:</h3>
+                        <input 
+                            id="form-create-room-width"
+                            type="number"
+                            min="512"
+                            max="4096" 
+                            value="2048"
+                            required="required" />
+                        <h3 style="display:inline;margin:0 .5em;">
+                            X
+                        </h3>
+                        <input 
+                            id="form-create-room-height"
+                            type="number"
+                            min="512"
+                            max="4096" 
+                            value="2048"  
+                            required="required" />
                     </div>
                 </div>
                 <div style="text-align: center;">

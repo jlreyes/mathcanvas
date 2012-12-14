@@ -6,29 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- CSS -->
     <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/font-awesome.css">
+    <link rel="stylesheet" href="style/spectrum.css">
     <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/page-room-mobile.css">
+    <link rel="stylesheet" href="style/page-chat-mobile.css">
     <!-- Libraries -->
     <script src="/scripts/lib/jquery.js"></script>
     <script src="/scripts/lib/hammer.js"></script>
     <script src="/scripts/lib/jquery.ontap.js"></script>
     <script src="/scripts/lib/dust.js"></script>
-    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script src="http://192.168.1.100:3000/socket.io/socket.io.js"></script>
+    <script src="http://192.168.1.100:8080/target/target-script-min.js"></script>
+    <script src="/scripts/lib/spectrum.js"></script>
     <!-- App Framework -->
     <script src="/scripts/app.js"></script>
     <!-- Page Templates -->
     <script src="/pages/login/template.js"></script>
     <script src="/pages/join-room/template.js"></script>
     <script src="/pages/room/template.js"></script>
+    <script src="/pages/chat/template.js"></script>
     <!-- Pages Classes -->
     <script src="/pages/login/page.js"></script>
     <script src="/pages/join-room/page.js"></script>
     <script src="/pages/room/page.js"></script>
+    <script src="/pages/chat/page.js"></script>
     <!-- Init -->
     <script src="/scripts/init.js"></script>
+    <!-- MATHJAX (code must be in dom) -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+        extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js"],
+        messageStyle: "simple",
+        showProcessingMessages: false,
+        showMathMenu: false,
+        skipStartupTypeset: false,
+        TeX: {
+            extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+        },
+        tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+            skipTags: ["script","noscript","style","textarea","code"]
+        },
+        zscale: "100%",
+        zoom: "None"
+      });
+    </script>
+    <script src="/scripts/lib/MathJax/MathJax.js"></script>
 </head>
 <body>
-    <div id="wait-screen"></div>
-    <div id="page-container-1" class="page-container"></div>
-    <div id="page-container-2" class="page-container"></div>
+    <div id="page-wrapper">
+        <div id="wait-screen"></div>
+        <div id="page-container-1" class="page-container"></div>
+        <div id="page-container-2" class="page-container"></div>
+    </div>
 </body>
 </html>

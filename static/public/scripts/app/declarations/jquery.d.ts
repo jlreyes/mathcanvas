@@ -353,8 +353,11 @@ interface JQuery {
     HAMMER PLUGIN
    *****/
    hammer(options : {[key: string] : any;});
-   ontap(downCB:()=>void, upCB:()=>void, tapCB:()=>void);
+   ontap(downCB:any, upCB:any, tapCB:any);
    onButtonTap(tapCB:()=>void);
+
+   /* SPECTRUM */
+   spectrum: any;
 
    /***
     CSS
@@ -369,7 +372,7 @@ interface JQuery {
    innerHeight(): number;
    innerWidth(): number;
 
-   offset(): Object;
+   offset(): any;
    offset(coordinates: any): JQuery;
    offset(func: (index: any, coords: any) => any): JQuery;
 

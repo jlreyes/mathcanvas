@@ -26,8 +26,11 @@ var JoinRoomView = (function (_super) {
         joinRoomButton.hammer({
         }).bind("tap", page.onJoinRoomTap.bind(page));
         this.mRoomList = jquery.find("ul.button-list");
+        return jquery;
+    };
+    JoinRoomView.prototype.refreshRoomsList = function () {
         this.mNumRooms = 0;
-        var user = app.getUser();
+        var user = Globals.app.getUser();
         for(var roomKey in user.rooms) {
             var room = user.rooms[roomKey];
             this.addRoomListButton(room);
@@ -36,7 +39,6 @@ var JoinRoomView = (function (_super) {
         if(this.mNumRooms === 0) {
             this.mRoomList.text("You have no rooms.");
         }
-        return jquery;
     };
     JoinRoomView.prototype.addRoomListButton = function (room) {
         if(this.mNumRooms === 0) {
@@ -49,8 +51,7 @@ var JoinRoomView = (function (_super) {
         this.mRoomList.append(button);
         button.hammer({
         }).bind("tap", function (e) {
-            var num = parseInt(room.id, 10);
-            page.joinRoom(num);
+            page.joinRoom(room.id);
         });
     };
     JoinRoomView.prototype.getJoinRoomInputJquery = function () {
@@ -69,6 +70,8 @@ var CreateRoomDialogView = (function (_super) {
         var page = this.getPage();
         this.mRoomType = jquery.find("#form-create-room-type");
         this.mRoomName = jquery.find("#form-create-room-name");
+        this.mRoomWidth = jquery.find("#form-create-room-width");
+        this.mRoomHeight = jquery.find("#form-create-room-height");
         jquery.find("#form-create-room-submit").hammer({
         }).bind("tap", page.createRoom.bind(page));
         return jquery;
@@ -76,7 +79,9 @@ var CreateRoomDialogView = (function (_super) {
     CreateRoomDialogView.prototype.getFormData = function () {
         return {
             name: this.mRoomName.val(),
-            type: this.mRoomType.val().toLowerCase()
+            type: this.mRoomType.val().toLowerCase(),
+            width: this.mRoomWidth.val(),
+            height: this.mRoomHeight.val()
         };
     };
     return CreateRoomDialogView;
@@ -93,266 +98,21 @@ var JoinRoomMobileView = (function (_super) {
 (function () {
     dust.register("dialog-create-room", body_0);
     function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\" class=\"section\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><selectid=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option><option>Private</option></select></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-background\"></div><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div><div style=\"text-align: left; display: none;\"><h3 style=\"margin: 0 .5em;display:inline;\">Dimensions:</h3><input id=\"form-create-room-width\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"required=\"required\" /><h3 style=\"display:inline;margin:0 .5em;\">X</h3><input id=\"form-create-room-height\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"  required=\"required\" /></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
     }
     return body_0;
 })();
 (function () {
     dust.register("dialog-create-room", body_0);
     function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option><option>Private</option></select></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-background\"></div><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div><div style=\"text-align: left; display: none;\"><h3 style=\"margin: 0 .5em;display:inline;\">Dimensions:</h3><input id=\"form-create-room-width\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"required=\"required\" /><h3 style=\"display:inline;margin:0 .5em;\">X</h3><input id=\"form-create-room-height\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"  required=\"required\" /></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
     }
     return body_0;
 })();
 (function () {
     dust.register("dialog-create-room", body_0);
     function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><label for=\"form-create-room-type\">Room Type</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option><option>Private</option></select></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option><option>Private</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option><option>Private</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"style=\"display:none;\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"style=\"display:none;\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"style=\"display:none;\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"style=\"display:none;\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
-    }
-    return body_0;
-})();
-(function () {
-    dust.register("dialog-create-room", body_0);
-    function body_0(chk, ctx) {
-        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-background\"></div><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div><div style=\"text-align: left; display: none;\"><h3 style=\"margin: 0 .5em;display:inline;\">Dimensions:</h3><input id=\"form-create-room-width\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"required=\"required\" /><h3 style=\"display:inline;margin:0 .5em;\">X</h3><input id=\"form-create-room-height\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"  required=\"required\" /></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
     }
     return body_0;
 })();
@@ -367,6 +127,25 @@ var JoinRoomPage = (function (_super) {
             this.setView(new JoinRoomMobileView(this));
         } else {
             throw "Unimplemented";
+        }
+    };
+    JoinRoomPage.prototype.onResume = function () {
+        var view = this.getView();
+        view.refreshRoomsList();
+        if(Util.exists(Globals.socket)) {
+            Globals.socket.destroy();
+            Globals.socket = null;
+            history.pushState({
+            }, "", "/");
+        } else {
+            var path = window.location.pathname;
+            if(Util.exists(path) && path.length > 1) {
+                path = path.substring(1, path.length);
+                var id = parseInt(path, 10);
+                if(Util.exists(id) && !isNaN(id)) {
+                    this.joinRoom(id);
+                }
+            }
         }
     };
     JoinRoomPage.prototype.onCreateRoomTap = function () {
@@ -402,8 +181,26 @@ var JoinRoomPage = (function (_super) {
     };
     JoinRoomPage.prototype.joinRoom = function (id) {
         var app = this.getApp();
+        var onError = function (e) {
+            app.startPage(new Intent(JoinRoomPage, {
+                destroy: true
+            }));
+            var context = {
+                title: "Error",
+                message: e,
+                buttons: [
+                    {
+                        text: "Okay",
+                        callback: app.back.bind(app)
+                    }
+                ]
+            };
+            app.startPage(new Intent(SimpleDialog, {
+                context: context
+            }));
+        };
+        Globals.socket = new Socket(app.getUser(), id, onError);
         app.startPage(new Intent(RoomPage, {
-            id: id
         }));
     };
     JoinRoomPage.prototype.logout = function () {
@@ -411,9 +208,9 @@ var JoinRoomPage = (function (_super) {
         }, function () {
             var app = this.getApp();
             app.setUser(null);
-            app.startPage(new Intent(LoginPage, {
-                destroy: true
-            }));
+            app.back({
+                backHint: LoginPage
+            });
         }.bind(this));
     };
     return JoinRoomPage;
@@ -434,13 +231,15 @@ var CreateRoomDialog = (function (_super) {
         var formData = view.getFormData();
         var postData = {
             name: formData.name,
-            type: formData.type
+            type: formData.type,
+            width: formData.width,
+            height: formData.height
         };
-        if(!formData.name.match(/^\w+$/)) {
+        var onFail = function (message) {
             app.back();
             var context = {
                 title: "Error",
-                message: "Invalid room name",
+                message: message,
                 buttons: [
                     {
                         text: "Okay",
@@ -451,6 +250,17 @@ var CreateRoomDialog = (function (_super) {
             app.startPage(new Intent(SimpleDialog, {
                 context: context
             }));
+        };
+        if(!formData.name.match(/^\w+$/)) {
+            onFail("Invalid room name");
+            return;
+        }
+        if(parseInt(formData.width, 10) <= 512 || parseInt(formData.width, 10) >= 4096) {
+            onFail("Width must be in range [512-4096]");
+            return;
+        }
+        if(parseInt(formData.height, 10) <= 512 || parseInt(formData.height, 10) >= 4096) {
+            onFail("Height must be in range [512-4096]");
             return;
         }
         Util.postJSON("rooms/createRoom", postData, function (result) {

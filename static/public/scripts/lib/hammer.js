@@ -29,6 +29,9 @@ function Hammer(element, options, undefined)
         scale_treshold     : 0.1,
         rotation_treshold  : 15,    // degrees
 
+        tapstart_callback  : function() {},
+        tapend_callback    : function() {},
+
         tap                : true,
         tap_double         : true,
         tap_max_interval   : 300,
@@ -561,6 +564,8 @@ function Hammer(element, options, undefined)
                 var count = countFingers(event);
                 _can_tap = count === 1;
 
+                if (options.tapstart_callback) options.tapstart_callback();
+
                 //We were dragging and now we are zooming.
                 if (count === 2 && _gesture === "drag") {
 
@@ -574,6 +579,7 @@ function Hammer(element, options, undefined)
                     });
                 }
                 _setup();
+
 
                 if(options.prevent_default) {
                     cancelEvent(event);
@@ -612,6 +618,8 @@ function Hammer(element, options, undefined)
 
                 _mousedown = false;
                 _event_end = event;
+
+                if (options.tapend_callback) options.tapend_callback();
 
                 // swipe gesture
                 gestures.swipe(event);
@@ -668,6 +676,7 @@ function Hammer(element, options, undefined)
                 if (callReset) {
                     reset();
                 }
+
                 break;
         } // end switch
 

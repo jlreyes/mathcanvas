@@ -9,6 +9,7 @@ class Page {
     private mApp : App;
     private mView : PageView;
     private mIntent : Intent;
+    private mTransitionOver : bool = false;
 
     constructor(app : App) {
         this.mApp = app;
@@ -33,13 +34,14 @@ class Page {
     public onCreate(intentData : any) : void {}
 
     /* Called when the page becomes in view. At this point, the page view is
-     * in the dom */
-    public onResume() : void {}
+     * in the dom. data is an optional variable containing data sent by
+     * the page we resumed from. */
+    public onResume(data? : any) : void {}
 
     /* Called when this page leaves the foreground.*/
     public onPause() : void {}
 
-    /* Called when this page is about to be destroyed */
+    /* Called when this page is about to be destroyed. */
     public onDestroy() : void {}
 
     /*
@@ -57,5 +59,13 @@ class Page {
 
     public getIntent() : Intent {
         return this.mIntent;
+    }
+
+    public getTransitionOver() : bool {
+        return this.mTransitionOver;
+    }
+
+    public setTransitionOver(b : bool) {
+        this.mTransitionOver = b;
     }
 }
