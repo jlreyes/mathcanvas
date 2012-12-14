@@ -72,7 +72,7 @@ class LoginPage extends Page {
             Util.postJSON("session/register", postData, function() {
                 /*Recaptcha.destroy();*/
                 this.onLoginSubmit();
-            }.bind(this),{preventInput: true, back: true});
+            }.bind(this),{preventInput: true});
         }.bind(this);
         onSubmit();
         /* The data we pass to the dialog */
