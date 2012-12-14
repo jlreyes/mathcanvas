@@ -140,8 +140,7 @@ var LoginPage = (function (_super) {
             Util.postJSON("session/register", postData, function () {
                 this.onLoginSubmit();
             }.bind(this), {
-                preventInput: true,
-                back: true
+                preventInput: true
             });
         }.bind(this);
         onSubmit();
