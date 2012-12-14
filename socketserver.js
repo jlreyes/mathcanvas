@@ -2,7 +2,7 @@
  * This socket server that sends data between appropriate users
  * in a given room
  */
-var io = require("socket.io").listen(3000);
+var io = require("socket.io").listen(8080);
 var dbClient = require("./lib/DbClient.js");
 var util = require("./lib/Util.js");
 

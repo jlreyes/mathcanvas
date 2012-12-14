@@ -235,7 +235,7 @@ the ten to be graded with a "G"
 /* TODO                                                                      */
 /*****************************************************************************/
 |---STYLING---|
--DONE- Scrollbars
+-DONE- Scrollbars (not needed due to)
 -DONE-Registration instructions
 -DONE- Back button "left arrow" styling
 -Prettier room overscroll separator
@@ -246,7 +246,7 @@ the ten to be graded with a "G"
 -Loading Animation
 -Weird canvas scrolling cordova?
 -DONE- Iconify things
--Cant' click back on ios
+-DONE- Cant' click back on ios
 
 |---FEATURES---|
 -math-canvas.com domain
