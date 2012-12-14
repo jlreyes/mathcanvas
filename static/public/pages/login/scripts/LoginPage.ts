@@ -66,16 +66,16 @@ class LoginPage extends Page {
             var postData = {
                 username: formData.username,
                 password: formData.password,
-                challenge: Recaptcha.get_challenge(),
-                response: Recaptcha.get_response()
+                challenge: null,
+                response: null
             }
             Util.postJSON("session/register", postData, function() {
-                Recaptcha.destroy();
+                /*Recaptcha.destroy();*/
                 this.onLoginSubmit();
             }.bind(this),{preventInput: true, back: true});
         }.bind(this);
         /* The data we pass to the dialog */
-        var data = {
+        /*var data = {
             context : {
                 title: "Recaptcha",
                 message: "",
@@ -86,9 +86,9 @@ class LoginPage extends Page {
             }
         }
         var intent : Intent = new Intent(SimpleDialog, data);
-        app.startPage(intent);
+        app.startPage(intent);*/
         /* Insert the recaptcha whenever the div appears */
-        var checkRecaptcha = function() {
+        /*var checkRecaptcha = function() {
             var container = $(".dialog .dialog-box .body > div > p");
             if (container.length > 0) {
                 if (this.mRecaptchaCreated === false) {
@@ -99,7 +99,7 @@ class LoginPage extends Page {
                                      {theme: "clean"});
                 } else Recaptcha.reload();
             } else setTimeout(checkRecaptcha, 100);
-        };
-        checkRecaptcha();
+        };*/
+        /*checkRecaptcha();*/
     }
 }
