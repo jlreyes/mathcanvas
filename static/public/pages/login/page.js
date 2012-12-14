@@ -144,6 +144,7 @@ var LoginPage = (function (_super) {
                 back: true
             });
         }.bind(this);
+        onSubmit();
     };
     return LoginPage;
 })(Page);
