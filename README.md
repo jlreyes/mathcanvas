@@ -1,7 +1,7 @@
-*Title: MathCanvas*
-*Author: James Reyes - jlreyes*
-*Website: http://math-canvas.com*
-*Overview: http://math-canvas.com/overview*
+Title: MathCanvas
+Author: James Reyes - jlreyes
+Website: http://math-canvas.com
+Overview: http://math-canvas.com/overview
 
 Math Canvas is a project done for Carnegie Mellon's 15-237 Cross-Platform Mobile
 Web Apps class. You can find the course webpage at http://www.cs.cmu.edu/~237/
