@@ -25,6 +25,10 @@ class LoginView extends PageView {
         this.mRegister
             .hammer({})
             .bind("tap", page.onRegisterSubmit.bind(page));
+        /* Info button */
+        jquery.find("#login-page-info-button")
+              .hammer({})
+              .bind("tap", page.onInfoTap.bind(page));
         /* Get form elem references */
         this.mUser = jquery.find("#form-login-username");
         this.mPassword = jquery.find("#form-login-password");

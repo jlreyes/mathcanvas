@@ -17,6 +17,8 @@ var LoginView = (function (_super) {
         this.mRegister = jquery.find("#form-login-register");
         this.mRegister.hammer({
         }).bind("tap", page.onRegisterSubmit.bind(page));
+        jquery.find("#login-page-info-button").hammer({
+        }).bind("tap", page.onInfoTap.bind(page));
         this.mUser = jquery.find("#form-login-username");
         this.mPassword = jquery.find("#form-login-password");
         this.mRecaptcha = jquery.find("#form-login-recaptcha");
@@ -70,12 +72,24 @@ var LoginPage = (function (_super) {
         _super.apply(this, arguments);
 
         this.mRecaptchaCreated = false;
+        this.mInfoTapId = "login-page-info-tap";
     }
     LoginPage.prototype.onCreate = function () {
         if(this.getApp() instanceof MobileApp) {
             this.setView(new LoginMobileView(this));
         } else {
             throw "Unimplemented";
+        }
+    };
+    LoginPage.prototype.onResume = function (data) {
+        if(!Util.exists(data)) {
+            return;
+        }
+        if(!Util.exists(data.id)) {
+            return;
+        }
+        if(data.id === this.mInfoTapId) {
+            this.onInfoTapReturn(data.result);
         }
     };
     LoginPage.prototype.formDataValid = function () {
@@ -88,6 +102,48 @@ var LoginPage = (function (_super) {
             return false;
         }
         return true;
+    };
+    LoginPage.prototype.onInfoTap = function () {
+        var app = this.getApp();
+        var context = {
+            id: this.mInfoTapId,
+            title: "Math-Canvas Info",
+            items: [
+                {
+                    text: "jlreyes.net",
+                    value: "jlreyes.net"
+                }, 
+                {
+                    text: "Overview",
+                    value: "Overview"
+                }, 
+                {
+                    text: "Android APK",
+                    value: "Android APK"
+                }, 
+                {
+                    text: "Source Code",
+                    value: "Source Code"
+                }
+            ]
+        };
+        app.startPage(new Intent(SelectDialog, {
+            context: context
+        }));
+    };
+    LoginPage.prototype.onInfoTapReturn = function (value) {
+        if(value === "jlreyes.net") {
+            window.location = "http://jlreyes.net";
+        }
+        if(value === "Android APK") {
+            window.location = "http://math-canvas.com/mathcanvas.apk";
+        }
+        if(value === "Overview") {
+            window.location = "http://math-canvas.com/overview";
+        }
+        if(value === "Source Code") {
+            alert("Source code will be available soon.");
+        }
     };
     LoginPage.prototype.onLoginSubmit = function (e) {
         if(Util.exists(e)) {

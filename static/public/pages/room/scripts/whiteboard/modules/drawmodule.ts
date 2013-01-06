@@ -295,7 +295,11 @@ class DrawModuleView extends WhiteboardModuleView {
                 x = Math.round(e.offsetX);
                 y = Math.round(e.offsetY);    
             } else {
-                var touch = e.originalEvent.touches[0];
+                console.log(e.originalEvent);
+                var original = e.originalEvent;
+                var touch = original;
+                if (Util.exists(original.touches))
+                    touch = original.touches[0];
                 var offset = this.getJquery().offset();
                 x = touch.pageX - offset.left;
                 y = touch.pageY - offset.top;

@@ -11,7 +11,10 @@ class DialogView extends PageView {
         super.makeMobile(jquery);
         /* The area outside of the dialog cancels the dialog */
         var self = this;
-        jquery.find(".dialog-background").bind("touchstart", function(e) {
+        var touchSupported = ('ontouchstart' in document.documentElement);
+        var tap = "touchstart";
+        if (touchSupported === false) tap = "mousedown";
+        jquery.find(".dialog-background").bind(tap, function(e) {
             self.cancel.bind(self)();
             e.preventDefault();
             e.stopPropagation();

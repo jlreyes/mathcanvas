@@ -8,12 +8,20 @@ declare var JoinRoomPage;
 
 class LoginPage extends Page {
     private mRecaptchaCreated : bool = false;
+    private mInfoTapId : string = "login-page-info-tap";
 
     public onCreate() : void {
         /* Create the view */
         if (this.getApp() instanceof MobileApp)
             this.setView(new LoginMobileView(this));
         else throw "Unimplemented";
+    }
+
+    public onResume(data? : any) : void {
+        if (!Util.exists(data)) return;
+        if (!Util.exists(data.id)) return;
+        if (data.id === this.mInfoTapId)
+            this.onInfoTapReturn(data.result);
     }
 
     /* Validates the form data */
@@ -25,6 +33,32 @@ class LoginPage extends Page {
             return false;
         if (data.password === "") return false;
         return true;
+    }
+
+    public onInfoTap() {
+        var app = this.getApp();
+        var context : SelectDialogContext = {
+            id: this.mInfoTapId,
+            title: "Math-Canvas Info",
+            items: [
+                {text: "jlreyes.net", value: "jlreyes.net"},
+                {text: "Overview", value: "Overview"},
+                {text: "Android APK", value: "Android APK"},
+                {text: "Source Code", value: "Source Code"}
+            ]
+        };
+        app.startPage(new Intent(SelectDialog, {context: context}));
+    }
+
+    public onInfoTapReturn(value : any) {
+        if (value === "jlreyes.net")
+            window.location = <any> "http://jlreyes.net";
+        if (value === "Android APK")
+            window.location = <any> "http://math-canvas.com/mathcanvas.apk";
+        if (value === "Overview")
+            window.location = <any> "http://math-canvas.com/overview";
+        if (value === "Source Code")
+            alert("Source code will be available soon.");
     }
 
     public onLoginSubmit(e) {

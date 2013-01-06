@@ -432,7 +432,12 @@ var DialogView = (function (_super) {
     DialogView.prototype.makeMobile = function (jquery) {
         _super.prototype.makeMobile.call(this, jquery);
         var self = this;
-        jquery.find(".dialog-background").bind("touchstart", function (e) {
+        var touchSupported = ('ontouchstart' in document.documentElement);
+        var tap = "touchstart";
+        if(touchSupported === false) {
+            tap = "mousedown";
+        }
+        jquery.find(".dialog-background").bind(tap, function (e) {
             self.cancel.bind(self)();
             e.preventDefault();
             e.stopPropagation();

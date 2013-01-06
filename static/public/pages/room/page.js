@@ -751,14 +751,12 @@ var WhiteboardModuleView = (function () {
     };
     WhiteboardModuleView.prototype.addHammer = function (jquery) {
         var addBorder = function () {
-            console.log("ADDING BORDER");
             if(this.mIsFocused === false) {
                 this.mJquery.css("border-color", "black");
                 this.mJquery.css("border-style", "dotted");
             }
         }.bind(this);
         var removeBorder = function () {
-            console.log("REMOVING BORDER");
             if(this.mIsFocused === false) {
                 this.mJquery.css("border-color", "rgba(0,0,0,0)");
             }
@@ -770,7 +768,7 @@ var WhiteboardModuleView = (function () {
             tap_double: false,
             swipe: false,
             transform: false,
-            tap: false,
+            tap: true,
             css_hacks: false
         });
         this.mHammer = hammer;
@@ -1274,7 +1272,12 @@ var DrawModuleView = (function (_super) {
                 x = Math.round(e.offsetX);
                 y = Math.round(e.offsetY);
             } else {
-                var touch = e.originalEvent.touches[0];
+                console.log(e.originalEvent);
+                var original = e.originalEvent;
+                var touch = original;
+                if(Util.exists(original.touches)) {
+                    touch = original.touches[0];
+                }
                 var offset = this.getJquery().offset();
                 x = touch.pageX - offset.left;
                 y = touch.pageY - offset.top;
