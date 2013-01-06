@@ -30,7 +30,7 @@ Project Layout
 For more information about a file, each file contains a description of
 itself (some more detailed than others) at its top.
 
-mathcanvas/
+mathcanvas/<br>
     socketserver.js - The socket server
     webserverer.js - The web server
     mockups/
