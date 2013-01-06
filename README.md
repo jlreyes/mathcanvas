@@ -30,7 +30,8 @@ Project Layout
 For more information about a file, each file contains a description of
 itself (some more detailed than others) at its top.
 
-mathcanvas/<br>
+<pre>
+mathcanvas/
     socketserver.js - The socket server
     webserverer.js - The web server
     mockups/
@@ -123,6 +124,7 @@ mathcanvas/<br>
                         util.ts - Contains utility functions used in the app
                      templates/
                         (This folder contains library html dust templates)
+</pre>
     
 Note about the project layout:
 Throughout the project you will see "mobile" within filenames. This is because
