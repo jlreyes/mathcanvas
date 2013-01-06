@@ -142,7 +142,7 @@ var LoginPage = (function (_super) {
             window.location = "http://math-canvas.com/overview";
         }
         if(value === "Source Code") {
-            alert("Source code will be available soon.");
+            window.location = "https://github.com/jlreyes/mathcanvas";
         }
     };
     LoginPage.prototype.onLoginSubmit = function (e) {

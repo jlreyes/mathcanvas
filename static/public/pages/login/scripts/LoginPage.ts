@@ -58,7 +58,7 @@ class LoginPage extends Page {
         if (value === "Overview")
             window.location = <any> "http://math-canvas.com/overview";
         if (value === "Source Code")
-            alert("Source code will be available soon.");
+            window.location = <any> "https://github.com/jlreyes/mathcanvas";
     }
 
     public onLoginSubmit(e) {

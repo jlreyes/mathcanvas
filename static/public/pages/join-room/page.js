@@ -116,6 +116,13 @@ var JoinRoomMobileView = (function (_super) {
     }
     return body_0;
 })();
+(function () {
+    dust.register("dialog-create-room", body_0);
+    function body_0(chk, ctx) {
+        return chk.write("<!-- Simple dialog template --><div class=\"dialog\"><div class=\"dialog-background\"></div><div class=\"dialog-box\"><div class=\"header\"><h1>Create room</h1></div><div class=\"body\"><form id=\"form-create-room\"><div style=\"text-align: center;\"><input id=\"form-create-room-name\"class=\"full\"type=\"text\"placeholder=\"Room Name\"required=\"required\" /><div class=\"form-elem-wrapper\"style=\"display:none;\"><label for=\"form-create-room-type\">Room Type:</label><select id=\"form-create-room-type\"class=\"full\"><option selected=\"selected\">Public</option></select></div><div style=\"text-align: left; display: none;\"><h3 style=\"margin: 0 .5em;display:inline;\">Dimensions:</h3><input id=\"form-create-room-width\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"required=\"required\" /><h3 style=\"display:inline;margin:0 .5em;\">X</h3><input id=\"form-create-room-height\"type=\"number\"min=\"512\"max=\"4096\" value=\"2048\"  required=\"required\" /></div></div><div style=\"text-align: center;\"><button id=\"form-create-room-submit\"class=\"full\">Create Room</button></div></form></div></div></div>");
+    }
+    return body_0;
+})();
 var JoinRoomPage = (function (_super) {
     __extends(JoinRoomPage, _super);
     function JoinRoomPage() {

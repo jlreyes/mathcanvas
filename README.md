@@ -131,3 +131,9 @@ tablet if I ever have the desire. Mostly everything is done with a MVC or MV
 structure so that I simply have to create a implement a new view (or in many
 cases, simply implement a new template) in order for the app to work on said
 device.
+
+License
+===============================================================================
+This work is licensed under the Creative Commons Attribution 3.0 Unported
+License. To view a copy of this license, visit 
+http://creativecommons.org/licenses/by/3.0/.
