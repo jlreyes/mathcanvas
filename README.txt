@@ -1,16 +1,27 @@
-Title: MathCanvas
-Author: James Reyes - jlreyes
+*Title: MathCanvas*
+*Author: James Reyes - jlreyes*
+*Website: http://math-canvas.com*
+*Overview: http://math-canvas.com/overview*
 
-Running:
-    math-canvas.com
-Video:
-    math-canvas.com/overview
-APK:
-    math-canvas.com/MathCanvas.apk (its in the public directory)
+Math Canvas is a project done for Carnegie Mellon's 15-237 Cross-Platform Mobile
+Web Apps class. You can find the course webpage at http://www.cs.cmu.edu/~237/
 
-/*****************************************************************************/
-/* PROJECT LAYOUT                                                            */
-/*****************************************************************************/
+Because this is a cross-platform mobile web app it works both on iOS and Android
+devices, and theoretically, any semi-modern browser.
+
+Running
+================================================================================
+1. Run a redis server (http://redis.io/)
+2. node webserver.js
+3. node socketserver.js
+
+Building
+================================================================================
+There are build.sh files scatterred throughout the project. They build various
+things depending on the folder they are in.
+
+Project Layout
+===============================================================================
 For more information about a file, each file contains a description of
 itself (some more detailed than others) at its top.
 
@@ -115,212 +126,3 @@ tablet if I ever have the desire. Mostly everything is done with a MVC or MV
 structure so that I simply have to create a implement a new view (or in many
 cases, simply implement a new template) in order for the app to work on said
 device.
-
-
-/*****************************************************************************/
-/* REQUIRED ELEMENTS                                                         */
-/*****************************************************************************/
-The required elements are in the order they appear on the webpage. I've marked
-the ten to be graded with a "G"
-
-1. Javascript - G
-    -Heavy javascript usage on both the server and a small amount of usage on
-     the client side.
-    -Although typescript is used on the client side, typescript isn't very far
-     from javascript.
-2. Canvas - G
-    -A drawing module is simply a canvas that can be drawn on. I use individual
-     canvases for each drawing to prevent unecessary redraws.
-3. HTML - G
-    -Although index.html is small, my application framework uses "pages". Each
-     page has its own HTML template that is dynamically loaded when you change
-     to said page.
-    -To dynamically load pages, I use the the templating libary "dust"
-     (https://github.com/linkedin/dustjs). Dust is very similar to mustache,
-     except it that is compiled to javascript for fast rendering and that
-     it is asynchronous (or at least, it is intended to be).
-    -When loading a page, my application framework "inflates" its template and
-     then uses jquery to parse the template and "mobilize" it. That is, we look
-     for buttons and other elements with data-type=button as an attribute and
-     then we add ontap listeners using the ontap library (written for jelp and
-     edited by me) in order to get better mobile feedback. We do other parsing
-     during the inflation as well.
-4. CSS - G
-    -I use a CSS normalizer, not a reset. Simply because I just wanted
-     normalized css across browsers, not necessarily reset css that is helpful
-    -Beyond the normalizer, I use no libraries. All CSS was done by me.
-    -I use SCSS to compile css. I use a mixin to patch prefixed properties as
-     well as a mixin for gradients.
-    -I use css transitions throughout my application. I have a transition class
-     that I apply to pages when I want them to transition, otherwise they do
-     not have that class. PageTransitioner.ts contains the page transition code.
-     I have a function that waits for a css transition to finish and then calls
-     a callback.
-    -Pages are contained within a page container and these page containers are
-     moved around to simulate transitionining forward, back, and by fading.
-    -There is obviously heavy css being done in the "canvas". Within
-     whiteboardmoduleview.ts and each modules individual view, all effects are
-     done with css.
-    -On the room page, we make use of the css class I made called "tab". A tab
-     is expected to contain elements that overflow horizontally. If the
-     the elements overflow horizontally, a horizontal scrollbar appears so you
-     can view the elements on desktop. On moble, no scrollbar appears but you
-     swipe to reveal hidden elements. This class allows me to make UIs that
-     have an unlimited number of horizontal buttons, mitigating the problem of
-     screen size.
-5. DOM manipulation
-    -I use jquery for dom manipulation. My application framework does a lot
-     of dom manipulation that I have already stated. For example:
-        -Pages are injected dynamically
-        -Pages are moved around with css
-    -My application framework also keeps the last visited page in the dom.
-     So if the user clicks back, we don't need to reload the template.
-    -The "canvas" in the room page is actually just a div containing all the
-     canvas modules which themselves are some html element.
-6. jQuery - G
-    -Again, I use jquery everywhere. Beyond dom manipulation and selection,
-     I use its static methods such as $.post, $.getJSON, etc.
-    -I also use a jquery declarations file for typescript
-7. jQuery Mobile/Sencha Touch/equivalent - G
-    -As stated, I made my own application framework. 
-8. PhoneGap
-    -It's packaged via phonegap.
-9. AJAX client - G
-    -Everything is done with AJAX client side. I use the AJAX API described
-     below.
-    -I use Util.postJSON for json requests. This wrapper checks the result
-     for errors and displays the error if one exists.
-10. AJAX server - G
-    -I created an AJAX api that can be accessed with post requests to
-     /json/<module>/<command>. The result of all calls is a json object
-     using the JsonResponse class I created. On success, each command
-     defines its own output. On error, however, the resulting JSON
-     object contains an "error" key with a value being the error message.
-    -Commands and modules can be found in /lib/commands
-11. node.js with express
-    -I use express (and node, obviously) to serve files to users.
-    -I manage login with passport and encrypt passwords and ids with crypto
-    -I have an AJAX api as stated above
-12. websockets - G
-    -I use websockets (i.e. socket.io) and a socket server to send data
-     between users.
-    -I segregrate users into rooms and only exchange data between users
-     in the same room.
-    -Socket.ts manages messages, message queuing (making sure to queue
-     messages if no one can receive a message so we don't lose them),
-     error handling, etc.
-    -socketserver.js manages the sockets.
-13. localStorage
-    -I use local storage to store canvas states and give users to reload the
-     states at a later time
-14. server-side databases - G
-    -I use redis to manage both users and rooms.
-    -A description of the database structure is in DbClient.js
-    -Redis wrappers can be found in DbClient.js
-    -Because redis is in-memory, I can read and store in the database before
-     routing a socket message. As seen in socketserver.js, I take advantage
-     of this.
-    -Because redis is in-memory, if my server dies there is a potential for
-     a loss of data. However, this is a trade-off I must make due to the
-     need for fast read and writes. Redis does store the database to disk
-     every 5 minutes or 100 writes, though. So I won't lose too much data.
-15. Typescript - G 
-    -I use typescript for everything client-side (I should have used it for
-     server side, but I didn't).
-
-/*****************************************************************************/
-/* TODO                                                                      */
-/*****************************************************************************/
-|---STYLING---|
--DONE- Scrollbars (not needed due to)
--DONE-Registration instructions
--DONE- Back button "left arrow" styling
--DONE- Prettier room overscroll separator
--DONE- Forward button "Right arrow" styling"
--DONE- Header and footer button general styling
--DONE- Better "Create Room" dialog
--DONE- Clean up css to use more ems
--DONE- Loading Animation
--DONE- Weird canvas scrolling cordova?
--DONE- Iconify things
--DONE- Cant' click back on ios
-
-|---FEATURES---|
--math-canvas.com domain
--DONE- Ability to save the canvas locally and restore it at a later time
--DONE-Ability to zoom in and out
--DONE- Ability to resize modules
--DONE- Ability to add drawings
-    -DONE- Ability to change the brush size
-    -DONE- Ability to change the brush color
-    -DONE- Ability to erase
--DONE- More text features
-    -DONE- Latex input
-    -DONE- Set the text size  
-    -DONE- Set the text color
--DONE- Going to <host>/<id> goes to the room with id <id>
--DONE- (Unecessary due to change) Highlighting of modules that are being edited
--DONE- Notification when people join
--DONE- Be able to get a list of people joining
--DONE- Url changes depending to reflect the page you are on
--DONE- Ability to share the room with other people
-    -DONE- Display ID
--DONE- Ability to refresh the list of your rooms
-    -DONE- Also automatically add a room when you manually join it
-    (Refreshing is not needed due to auto-adding)
--DONE- Password and id hashing
--DONE (Impossible on phonegap) - Recaptcha fix
-
-/*****************************************************************************/
-/* USER TESTING                                                              */
-/*****************************************************************************/
-|----------------|
-SUGGESTION:
-The "chat" icon was a person, I should make this a speech bubble
-
-RESULT: Done
-|----------------|
-SUGGESTION:
-The chat should display some notification when a message is received
-
-RESULT: Implemented internally, but I need to wait for icons to finish this.
-|----------------|
-SUGGESTION:
-The default way to register is confusing because, unlike other registration
-forms on the web, the login and registration forms are not separate.
-
-RESULT:
-I need to provide hints on the login screen to combat the confusion. Also,
-the error message provided when you click register without filling in the
-form is not very helpful. Fixing this should fix that.
-|----------------|
-SUGGESTION:
-When you edit a module, intuitivly you want to be able to move it. Clicking
-a button to move isn't intuitive.
-
-RESULT: Have to change some code around for this, but will do this next week.
-|----------------|
-SUGGESTION:
-When someone else is editing a module, highlight the module so a user knows
-what is being edited.
-
-RESULT: This is a good idea, but requires a bit of server reworking, so I'll do
-this.
-
-/*****************************************************************************/
-/* ITERATIVE DESIGN/STORYBOARDS                                              */
-/*****************************************************************************/
-Examples of iterative design are available in /mockups/balsamiq.
-There are xml files there that contain balsamiq mockups you can load on
-balsamiq.
-My competitive analysis is there as well.
-
-As you can see by my mockups, I was overly ambitious and thus my design ended
-up becoming drastically simplified. For example, I switched to an entirely
-mobile interface. This mobile interface is very similar to my semi-final
-interface, however.
-
-Examples of my design changing:
-1. I am adding icons in response to user testing
-2. I am adding more onscreen hints in response to user testing
-3. I changed the header and footer buttons in response to user testing.
