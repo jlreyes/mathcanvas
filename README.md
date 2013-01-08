@@ -14,6 +14,9 @@ Web Apps class. You can find the course webpage at http://www.cs.cmu.edu/~237/
 Because this is a cross-platform mobile web app it works both on iOS and Android
 devices, and theoretically, any semi-modern browser.
 
+Math Canvas uses a Typescript Framework developed for general purpose mobile
+applications (https://github.com/jlreyes/ts-mobile-framework).
+
 Running
 ================================================================================
 1. Run a redis server (http://redis.io/)
