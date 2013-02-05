@@ -15,6 +15,7 @@
 }
 
 @mixin linear-gradient($dir, $begin, $end) {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($begin), to($end));
   background-image: -webkit-linear-gradient($dir, $begin, $end);
   background-image: -moz-linear-gradient($dir, $begin, $end);
   background-image: -o-linear-gradient($dir, $begin, $end);
@@ -53,8 +54,8 @@ p {
 /* Box area styling */
 .box {
     @include linear-gradient(top, #ffffff, #eeeeee);
+    @include browser-patch(box-shadow, 0px 0px 5px #444444);
     border-radius: 10px;
-    box-shadow: 0px 0px 5px #444444;
     margin: 20px auto;
     padding: 5px 10px;
 }
@@ -75,25 +76,25 @@ ul.button-list {
     padding: 0;
     li {
         @include linear-gradient(top, #FFFFFF, #EEEEEE);
+        @include browser-patch(box-shadow, 0px 0px 2px #444444);
         border: solid 1px #888888;
         border-radius: 5px;
-        box-shadow: 0px 0px 2px #444444;
         cursor: pointer;
         margin: .25em 0;
         padding: .7em .5em;
     }
     li.active {
-        box-shadow: 0px 0px 4px #444444 inset;
+        @include browser-patch(box-shadow, 0px 0px 4px #444444 inset);
     }
 }
 
 /* Button styling */
 button {
     @include browser-patch(appearance, none);
+    @include browser-patch(box-shadow, 0px 0px 5px #444444);
     @include linear-gradient(top, #4888EF, #3777DE);
     border: solid 1px #444444;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px #444444;
     margin: 5px 5px;
     color: #ffffff;
     padding: 10px 20px;
@@ -105,13 +106,15 @@ button {
 
 button.active {
     @include linear-gradient(top, #5999FF, #4888EF);
-    box-shadow: 0px 0px 5px #444444 inset;
+    @include browser-patch(box-shadow, 0px 0px 5px #444444 inset);
+    @include linear-gradient(top, #4888EF, #3777DE);
 }
 
 textarea {
     border: none;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px #444444 inset;
+    @include browser-patch(box-shadow, 0 0px 0px 5px #444444 inset);
+    @include linear-gradient(top, #4888EF, #3777DE);
     margin: 5px auto;
     padding: .25em .5em;
     -webkit-user-select: auto;
@@ -123,7 +126,7 @@ input:not([type=range]) {
     @include browser-patch(appearance, none);
     border: none;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px #444444 inset;
+    @include browser-patch(box-shadow, 0px 0px 5px #444444 inset);
     height: 1em + (2*$input-padding);
     margin: 5px auto;
     padding: .25em .5em;
@@ -145,7 +148,7 @@ input.full {
 
 input:focus {
     outline-width: 0;
-    box-shadow: 0px 0px 5px 1px #444466 inset;
+    @include browser-patch(box-shadow, 0px 0px 5px 1px #444466 inset);
 }
 
 /* Form elem styling */
@@ -220,7 +223,7 @@ $bar-height: 50px;
     .header {
         @include linear-gradient(top, #222222, #111111);
         //background: #222222;
-        box-shadow: 0px 1px 12px black;
+        @include browser-patch(box-shadow, 0px 1px 12px black);
         color: white;
         height: $bar-height;
         overflow: hidden;
@@ -287,7 +290,7 @@ $bar-height: 50px;
 
 $button-icon-height: 3 * $bar-height / 4;
 button.icon {
-    box-shadow: none;
+    @include browser-patch(box-shadow, none);
     height: $button-icon-height;
     line-height: $button-icon-height;
     padding: 0 $button-icon-height * .2;
