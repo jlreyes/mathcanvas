@@ -74,6 +74,10 @@ var sendError = function(response, title, message) {
     response.send(404, JSON.stringify(error));
 };
 
+server.get("/overview", function(request, response) {
+    response.sendfile(__dirname + "/static/public/overview.avi");
+});
+
 server.get(/^\/([0-9]+)$/, function(request, response) {
     var id = parseInt(request.params[0], 10);
     if (util.exists(id) && (isNaN(id) === false))
